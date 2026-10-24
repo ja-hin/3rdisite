@@ -6,7 +6,7 @@
  * where it should sit via data-orb="x y scale hue" (x,y in -1..1 viewport space).
  */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 const noise = /* glsl */ `
@@ -150,6 +150,12 @@ function Planet({ reduced }: { reduced: boolean }) {
     return geo;
   }, []);
   const pts = useRef<THREE.Points>(null!);
+
+  // start exactly where the first section wants the planet, so pages that hide it never flash it
+  useEffect(() => {
+    const t = readTargets();
+    Object.assign(state.current, { x: t.x, y: t.y, s: t.s, h: t.h });
+  }, []);
 
   useFrame((_, dt) => {
     const st = state.current;

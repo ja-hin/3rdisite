@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAtmosphere } from './Atmosphere';
+import { Brand } from './Brand';
 
 const links = [
   ['Services', '#services'],
@@ -22,26 +23,7 @@ export function Nav() {
   }, []);
   return (
     <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
-      <a href="#top" className="brand" aria-label="3rd i Visuals home">
-        <span className="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 40 40" width="34" height="34">
-            <defs>
-              <linearGradient id="bm" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#6b4ef0" />
-                <stop offset=".55" stopColor="#1f7cf5" />
-                <stop offset="1" stopColor="#ec4b9b" />
-              </linearGradient>
-            </defs>
-            <circle cx="20" cy="20" r="9" fill="url(#bm)" />
-            <ellipse cx="20" cy="20" rx="17" ry="6.5" fill="none" stroke="url(#bm)" strokeWidth="2.2" transform="rotate(-24 20 20)" />
-            <circle cx="35.3" cy="13.2" r="2.4" fill="#ec4b9b" />
-          </svg>
-        </span>
-        <span className="brand-word">
-          3rd i Visuals
-          <small>Growth, technology and owned IP</small>
-        </span>
-      </a>
+      <Brand href="#top" />
       <nav className="nav-links" aria-label="Primary">
         {links.map(([l, h]) => (
           <a key={h} href={h} onClick={() => setOpen(false)}>{l}</a>

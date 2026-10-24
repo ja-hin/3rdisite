@@ -29,6 +29,12 @@ export default function Atmosphere({ children }: { children: ReactNode }) {
   const lenis = useRef<Lenis | null>(null);
   const reduced = useReducedMotion();
   const [fluidOk, setFluidOk] = useState(true);
+  // without WebGL the planet cannot mount (three throws); the page still works, just without it
+  const [webgl, setWebgl] = useState(false);
+  useEffect(() => {
+    const c = document.createElement('canvas');
+    try { setWebgl(!!(c.getContext('webgl2') || c.getContext('webgl'))); } catch { setWebgl(false); }
+  }, []);
 
   useEffect(() => {
     if (!canvas.current) return;
@@ -67,7 +73,7 @@ export default function Atmosphere({ children }: { children: ReactNode }) {
       <div className="atmos" aria-hidden="true">
         <div className="atmos-base" />
         {fluidOk && <canvas ref={canvas} className="fluid-canvas" />}
-        <Orb reduced={reduced} />
+        {webgl && <Orb reduced={reduced} />}
         <div className="atmos-grain" />
       </div>
       {children}

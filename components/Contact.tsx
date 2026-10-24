@@ -16,7 +16,7 @@ const endpoint = process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '/api/lead';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
-export function LeadForm() {
+export function LeadForm({ defaultService = '' }: { defaultService?: string }) {
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
 
@@ -82,7 +82,7 @@ export function LeadForm() {
         <label className="field field-wide">
           <span>What do you need help with?</span>
           <div className="select-wrap">
-            <select name="service" required defaultValue="">
+            <select name="service" required defaultValue={defaultService}>
               <option value="" disabled>Choose an area</option>
               {options.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>

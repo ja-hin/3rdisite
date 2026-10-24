@@ -22,6 +22,15 @@ Static export (for any static host): `STATIC_EXPORT=1 npm run build` → `out/`.
 | `components/Hero.tsx` | Nav + hero. |
 | `components/Services.tsx` | Pinned horizontal service track, approach section with scroll-drawn step rail. |
 | `components/Sections.tsx` | E-commerce, content, automation, AI products, work, audience, insights, CTA, enquiry form, footer. |
+| `app/services/page.tsx` | Services index (`/services`): hero ring, four service cards, interactive "ecosystem advantage", how we work, ways to engage, AI products, who we work with, work, CTA, enquiry form. |
+| `app/services/[slug]/page.tsx` | One route per service: `/services/content-creative`, `/services/ecommerce-growth`, `/services/automation-ai`, `/services/b2b-lead-generation`. Prerendered from `generateStaticParams`. |
+| `lib/services.ts` | All copy, section order and accent colours for the four service pages. Edit text here, not in the components. |
+| `components/services/ServicePage.tsx` | Renders a service page from its section list (hero, proposition, cards, paths, flow, bands, split, ecosystem, how, three, work, CTA). |
+| `components/services/ServicesIndex.tsx` | The services index page. |
+| `components/services/SiteNav.tsx` | Header for the inner pages; white over the dark hero, glass bar once scrolled. |
+| `public/assets/` | Logo, the photos used on the services pages and the two looping hero videos. Referenced as `/assets/<file>` from `lib/services.ts`. |
+| `components/Brand.tsx` | The logo link used in both headers. |
+| `app/services.css` | Styles for the services pages (`.sp-*` shared, `.sx-*` index only). |
 | `components/Contact.tsx` | Lead form (name, email, company, phone, service, message, honeypot) with sending / sent / error states. |
 | `app/api/lead/route.ts` | Receives the form, validates and rate-limits it, forwards to a webhook and/or email. |
 | `app/globals.css` | Design tokens and all styling. |
@@ -48,6 +57,6 @@ submissions with a filled honeypot field and allows six per IP every ten minutes
 ## Before launch
 
 - Set the lead-form variables above, and update `hello@3rdivisuals.com` in `components/Sections.tsx` if the inbox differs.
-- Point the `#` links (service pages, case studies, insights) at real routes when those pages exist.
-- Swap the CSS-drawn placeholders (content reels, studio shots, insight art) for your own video stills or renders.
+- Point the remaining `#` links (case studies, insights) at real routes when those pages exist. Service pages live under `/services`.
+- Swap the CSS-drawn placeholders on the home page (content reels, studio shots, insight art) for your own video stills or renders. The services pages already use the photos in `public/assets`; the work cards there still show sample images until real case studies exist.
 # 3rdisite

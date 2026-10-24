@@ -11,6 +11,7 @@ export const services = [
     body: 'Build communication that gets noticed and helps customers understand, trust and choose your brand.',
     items: ['Content strategy', 'Social media', 'Video & AI video', '3D & CGI', 'Performance creatives', 'Campaigns'],
     cta: 'Explore content & creative',
+    href: '/services/content-creative',
     glyph: 'lens',
   },
   {
@@ -20,6 +21,7 @@ export const services = [
     body: 'Grow sales across marketplaces and your own digital channels, with strategy and execution managed together.',
     items: ['Amazon & marketplace management', 'D2C & websites', 'Marketplace SEO', 'Amazon PPC', 'Google & Meta ads', 'Conversion optimisation'],
     cta: 'Explore e-commerce growth',
+    href: '/services/ecommerce-growth',
     glyph: 'cart',
   },
   {
@@ -29,6 +31,7 @@ export const services = [
     body: 'Find repetitive, inefficient processes and make them faster, simpler and more intelligent.',
     items: ['Marketing automation', 'CRM workflows', 'AI agents', 'Lead qualification', 'Email & WhatsApp automation', 'Dashboards & reporting'],
     cta: 'Explore AI & automation',
+    href: '/services/automation-ai',
     glyph: 'nodes',
   },
   {
@@ -38,6 +41,7 @@ export const services = [
     body: 'Build a structured outbound engine that identifies the right prospects and creates qualified sales opportunities.',
     items: ['ICP & database building', 'Cold email outreach', 'LinkedIn outreach', 'Appointment setting', 'Follow-ups & CRM', 'Inside sales support'],
     cta: 'Explore B2B lead generation',
+    href: '/services/b2b-lead-generation',
     glyph: 'target',
   },
 ];
@@ -85,7 +89,7 @@ function Card({ s, i }: { s: (typeof services)[number]; i: number }) {
       <h3>{s.title}</h3>
       <p>{s.body}</p>
       <ul>{s.items.map((it) => <li key={it}>{it}</li>)}</ul>
-      <a href="#contact" className="svc-link">{s.cta}</a>
+      <a href={s.href} className="svc-link">{s.cta}</a>
     </article>
   );
 }

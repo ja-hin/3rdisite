@@ -119,6 +119,7 @@ section { position: relative; padding: clamp(96px, 14vh, 160px) var(--gutter); m
 .brand-word { font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.05; letter-spacing: -0.01em; display: flex; flex-direction: column; }
 .brand-word small { font-family: var(--body); font-weight: 500; font-size: 11px; color: var(--muted); letter-spacing: 0.01em; margin-top: 3px; }
 .brand-mark svg { display: block; }
+.brand-logo { display: block; height: 44px; width: auto; }
 .nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
 .nav-links a { position: relative; color: var(--muted); transition: color 0.3s; }
 .nav-links a:hover { color: var(--text); }
@@ -538,6 +539,7 @@ section { position: relative; padding: clamp(96px, 14vh, 160px) var(--gutter); m
   .nav.is-open .nav-toggle span:first-child { transform: translateY(3.75px) rotate(45deg); }
   .nav.is-open .nav-toggle span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
   .brand-word small { display: none; }
+  .brand-logo { height: 34px; }
 
   .hero { grid-template-columns: 1fr; align-content: end; padding-top: 52vh; padding-bottom: 110px; }
   .hero-ring { position: absolute; left: 0; right: 0; top: 0; height: 52vh; min-height: 0; }

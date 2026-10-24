@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type PointerEvent as RPointerEvent } from 'react';
+import { usePathname } from 'next/navigation';
 import { useAtmosphere } from './Atmosphere';
 import { LeadForm } from './Contact';
 
@@ -289,7 +290,7 @@ export function Cta() {
   );
 }
 
-export function Enquire() {
+export function Enquire({ defaultService }: { defaultService?: string } = {}) {
   return (
     <section id="enquire" className="enquire" data-orb="0 0 0 0.2">
       <div className="enquire-copy">
@@ -306,12 +307,15 @@ export function Enquire() {
           <a href="mailto:hello@3rdivisuals.com">hello@3rdivisuals.com</a>
         </div>
       </div>
-      <LeadForm />
+      <LeadForm defaultService={defaultService} />
     </section>
   );
 }
 
 export function Footer() {
+  // on the home page the company links glide in-page; elsewhere they go back home
+  const home = usePathname() === '/';
+  const at = (hash: string) => (home ? hash : `/${hash}`);
   return (
     <footer className="footer" data-orb="0 0 0 0">
       <div className="footer-brand">
@@ -320,17 +324,17 @@ export function Footer() {
       </div>
       <nav aria-label="Services">
         <h4>Services</h4>
-        <a href="#services">Content & creative</a>
-        <a href="#services">E-commerce growth</a>
-        <a href="#services">AI & automation</a>
-        <a href="#services">B2B lead generation</a>
+        <a href="/services/content-creative">Content & creative</a>
+        <a href="/services/ecommerce-growth">E-commerce growth</a>
+        <a href="/services/automation-ai">AI & automation</a>
+        <a href="/services/b2b-lead-generation">B2B lead generation</a>
       </nav>
       <nav aria-label="Company">
         <h4>Company</h4>
-        <a href="#work">Work</a>
-        <a href="#products">AI products</a>
-        <a href="#insights">Insights</a>
-        <a href="#contact">Contact</a>
+        <a href={at('#work')}>Work</a>
+        <a href={at('#products')}>AI products</a>
+        <a href={at('#insights')}>Insights</a>
+        <a href="#enquire">Contact</a>
       </nav>
       <p className="footer-base">© {new Date().getFullYear()} 3rd i Visuals, 3rdivisuals.com</p>
     </footer>
