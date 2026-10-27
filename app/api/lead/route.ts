@@ -5,12 +5,14 @@ import { NextResponse } from 'next/server';
  * whichever destinations are configured through environment variables:
  *   LEAD_WEBHOOK_URL   any JSON webhook (Zapier, Make, n8n, Google Sheets, your CRM)
  *   RESEND_API_KEY     email the lead through resend.com
- *   LEAD_TO_EMAIL      inbox that receives the email (required with RESEND_API_KEY)
+ *   LEAD_TO_EMAIL      inbox that receives the email (defaults to rupam@3rdivisuals.com)
  *   LEAD_FROM_EMAIL    verified sender for Resend (defaults to leads@3rdivisuals.com)
  * With nothing configured the lead is logged to the server console so local
  * development still works end to end.
  */
 export const runtime = 'nodejs';
+
+const DEFAULT_INBOX = 'rupam@3rdivisuals.com';
 
 type Lead = {
   name: string;
@@ -88,7 +90,8 @@ export async function POST(req: Request) {
     );
   }
 
-  if (process.env.RESEND_API_KEY && process.env.LEAD_TO_EMAIL) {
+  if (process.env.RESEND_API_KEY) {
+    const inbox = process.env.LEAD_TO_EMAIL || DEFAULT_INBOX;
     const lines = [`Name: ${lead.name}`, `Email: ${lead.email}`];
     if (lead.company) lines.push(`Company: ${lead.company}`);
     if (lead.phone) lines.push(`Phone: ${lead.phone}`);
@@ -101,7 +104,7 @@ export async function POST(req: Request) {
         headers: { 'content-type': 'application/json', authorization: `Bearer ${process.env.RESEND_API_KEY}` },
         body: JSON.stringify({
           from: process.env.LEAD_FROM_EMAIL ?? '3rd i Visuals <leads@3rdivisuals.com>',
-          to: process.env.LEAD_TO_EMAIL.split(',').map((s) => s.trim()),
+          to: inbox.split(',').map((s) => s.trim()),
           reply_to: lead.email,
           subject: `New lead: ${lead.name}${lead.company ? ` at ${lead.company}` : ''} — ${lead.service}`,
           text,
@@ -111,8 +114,9 @@ export async function POST(req: Request) {
   }
 
   if (deliveries.length === 0) {
+    // nothing configured: log it here and let the browser hand the lead to the inbox via a mail draft
     console.log('[lead] no delivery configured, logging instead:\n', JSON.stringify(record, null, 2));
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, delivered: false, inbox: DEFAULT_INBOX });
   }
 
   const results = await Promise.allSettled(deliveries);

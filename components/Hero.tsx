@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useAtmosphere } from './Atmosphere';
 import { Brand } from './Brand';
+import { ServicesMenu } from './ServicesMenu';
 
 const links = [
-  ['Services', '#services'],
   ['AI products', '#products'],
   ['Work', '#work'],
   ['About', '#approach'],
@@ -25,6 +25,7 @@ export function Nav() {
     <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <Brand href="#top" />
       <nav className="nav-links" aria-label="Primary">
+        <ServicesMenu onNavigate={() => setOpen(false)} />
         {links.map(([l, h]) => (
           <a key={h} href={h} onClick={() => setOpen(false)}>{l}</a>
         ))}

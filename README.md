@@ -31,6 +31,7 @@ Static export (for any static host): `STATIC_EXPORT=1 npm run build` → `out/`.
 | `public/assets/` | Logo, the photos used on the services pages and the two looping hero videos. Referenced as `/assets/<file>` from `lib/services.ts`. |
 | `components/Brand.tsx` | The logo link used in both headers. |
 | `app/services.css` | Styles for the services pages (`.sp-*` shared, `.sx-*` index only). |
+| `components/Showreel.tsx` | The four YouTube showreels in the "Content that works harder" section: thumbnail at rest, muted autoplay on hover, overlay player on click. Change the video ids in the `reels` list. |
 | `components/Contact.tsx` | Lead form (name, email, company, phone, service, message, honeypot) with sending / sent / error states. |
 | `app/api/lead/route.ts` | Receives the form, validates and rate-limits it, forwards to a webhook and/or email. |
 | `app/globals.css` | Design tokens and all styling. |
@@ -51,12 +52,12 @@ Copy `.env.example` to `.env.local` and set where leads should go:
 | `RESEND_API_KEY` + `LEAD_TO_EMAIL` | Emails each lead through [Resend](https://resend.com). `LEAD_FROM_EMAIL` must be a verified sender. |
 | `NEXT_PUBLIC_LEAD_ENDPOINT` | Static export only. The form posts straight to this URL (Formspree, Web3Forms, …) because there is no API route. |
 
-With nothing set, leads are printed to the server console so local development works. The route rejects
+Leads are addressed to `rupam@3rdivisuals.com` by default. With no key set, the lead is printed to the server console and the visitor's browser opens a pre-filled mail draft to that inbox, so nothing is lost. The route rejects
 submissions with a filled honeypot field and allows six per IP every ten minutes.
 
 ## Before launch
 
-- Set the lead-form variables above, and update `hello@3rdivisuals.com` in `components/Sections.tsx` if the inbox differs.
+- Paste a Resend API key into `.env.local` so leads are emailed automatically. Change the inbox with `LEAD_TO_EMAIL` and in the "Prefer email?" link in `components/Sections.tsx`.
 - Point the remaining `#` links (case studies, insights) at real routes when those pages exist. Service pages live under `/services`.
 - Swap the CSS-drawn placeholders on the home page (content reels, studio shots, insight art) for your own video stills or renders. The services pages already use the photos in `public/assets`; the work cards there still show sample images until real case studies exist.
 # 3rdisite

@@ -4,6 +4,7 @@ import { useEffect, useRef, type PointerEvent as RPointerEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAtmosphere } from './Atmosphere';
 import { LeadForm } from './Contact';
+import { Showreel } from './Showreel';
 
 /* ---------- E-commerce ---------- */
 
@@ -80,13 +81,6 @@ export function Commerce() {
 
 /* ---------- Content ---------- */
 
-const reels = [
-  { t: 'AI video', d: 'Cinematic AI-generated films, ads and characters, directed shot by shot.', h: 'a' },
-  { t: '3D & CGI', d: 'Product renders and CGI that show what a camera cannot.', h: 'b' },
-  { t: 'Product films', d: 'Short films that make a product easy to understand and want.', h: 'c' },
-  { t: 'Social content', d: 'Always-on content built for the feed, the reel and the story.', h: 'd' },
-];
-
 export function Content() {
   return (
     <section id="work-content" className="content" data-orb="0 0 0 0.5">
@@ -97,17 +91,7 @@ export function Content() {
           strategy from the content customers actually see.
         </p>
       </div>
-      <div className="reels">
-        {reels.map((r) => (
-          <a href="#work" key={r.t} className={`reel reel-${r.h}`}>
-            <div className="reel-liquid"><i /><i /><i /></div>
-            <div className="reel-meta">
-              <h3>{r.t}</h3>
-              <p>{r.d}</p>
-            </div>
-          </a>
-        ))}
-      </div>
+      <Showreel />
     </section>
   );
 }
@@ -152,10 +136,10 @@ export function Automation() {
 /* ---------- AI products ---------- */
 
 const studio = [
-  { t: 'Virtual models', h: 'a' },
-  { t: 'Product shoots', h: 'b' },
-  { t: 'Lifestyle images', h: 'c' },
-  { t: 'Marketing creatives', h: 'd' },
+  { t: 'Virtual models', img: '/assets/fashion-a.jpg' },
+  { t: 'Product shoots', img: '/assets/fashion-rack.jpg' },
+  { t: 'Lifestyle images', img: '/assets/fashion-d.jpg' },
+  { t: 'Marketing creatives', img: '/assets/fashion-c.jpg' },
 ];
 
 export function Products() {
@@ -177,8 +161,8 @@ export function Products() {
         </div>
         <div className="studio-grid">
           {studio.map((s) => (
-            <figure key={s.t} className={`shot shot-${s.h}`}>
-              <div className="figure" aria-hidden="true"><i className="head" /><i className="body" /></div>
+            <figure key={s.t} className="shot">
+              <img src={s.img} alt={s.t} loading="lazy" decoding="async" />
               <figcaption>{s.t}</figcaption>
             </figure>
           ))}
@@ -304,7 +288,7 @@ export function Enquire({ defaultService }: { defaultService?: string } = {}) {
         </ul>
         <div className="cta-direct">
           <span>Prefer email?</span>
-          <a href="mailto:hello@3rdivisuals.com">hello@3rdivisuals.com</a>
+          <a href="mailto:rupam@3rdivisuals.com">rupam@3rdivisuals.com</a>
         </div>
       </div>
       <LeadForm defaultService={defaultService} />

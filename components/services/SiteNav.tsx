@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Brand } from '@/components/Brand';
+import { ServicesMenu } from '@/components/ServicesMenu';
 import { useNavState } from './effects';
 
 const links: [string, string][] = [
-  ['Services', '/services'],
   ['AI products', '/#products'],
   ['Work', '/#work'],
   ['About', '/#approach'],
@@ -21,6 +21,7 @@ export function SiteNav({ current = '/services' }: { current?: string }) {
     <header className={cls}>
       <Brand />
       <nav className="nav-links" aria-label="Primary">
+        <ServicesMenu current={current === '/services'} onNavigate={() => setOpen(false)} />
         {links.map(([l, h]) => (
           <a key={h} href={h} aria-current={h === current ? 'page' : undefined} className={h === current ? 'is-current' : undefined} onClick={() => setOpen(false)}>
             {l}

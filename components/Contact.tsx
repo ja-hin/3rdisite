@@ -34,6 +34,13 @@ export function LeadForm({ defaultService = '' }: { defaultService?: string }) {
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok || json.ok === false) throw new Error(json.error || 'Something went wrong. Please try again.');
+      if (json.delivered === false && json.inbox) {
+        // no email service configured on the server yet: open a ready-to-send draft instead
+        const d = data as Record<string, string>;
+        const subject = `New enquiry: ${d.name}${d.company ? ` at ${d.company}` : ''} — ${d.service}`;
+        const body = [`Name: ${d.name}`, `Email: ${d.email}`, d.company && `Company: ${d.company}`, d.phone && `Phone: ${d.phone}`, `Needs help with: ${d.service}`, '', d.message || '(no message)'].filter(Boolean).join('\n');
+        window.location.href = `mailto:${json.inbox}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
       setStatus('sent');
       form.reset();
     } catch (err) {

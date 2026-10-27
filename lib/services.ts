@@ -15,13 +15,13 @@ export const ACCENTS: Record<ServiceKey, Accent> = {
   b2b: { main: '#ec4b9b', soft: '#fdeef5', text: '#c8307f', light: '#f59ac6', rgb: '236,75,155', hue: 0.5 },
 };
 
-export type ServicePageMeta = { key: ServiceKey; slug: string; name: string; href: string; formLabel: string };
+export type ServicePageMeta = { key: ServiceKey; slug: string; name: string; tagline: string; href: string; formLabel: string };
 
 export const SERVICE_PAGES: ServicePageMeta[] = [
-  { key: 'content', slug: 'content-creative', name: 'Content & Creative', href: '/services/content-creative', formLabel: 'Content, creative & communication' },
-  { key: 'ecommerce', slug: 'ecommerce-growth', name: 'E-commerce Growth', href: '/services/ecommerce-growth', formLabel: 'E-commerce & digital sales growth' },
-  { key: 'automation', slug: 'automation-ai', name: 'AI & Automation', href: '/services/automation-ai', formLabel: 'Marketing automation & AI enablement' },
-  { key: 'b2b', slug: 'b2b-lead-generation', name: 'B2B Lead Generation', href: '/services/b2b-lead-generation', formLabel: 'B2B lead generation & sales outreach' },
+  { key: 'content', slug: 'content-creative', name: 'Content & Creative', tagline: 'Creative & communication', href: '/services/content-creative', formLabel: 'Content, creative & communication' },
+  { key: 'ecommerce', slug: 'ecommerce-growth', name: 'E-commerce Growth', tagline: 'Marketplace & D2C', href: '/services/ecommerce-growth', formLabel: 'E-commerce & digital sales growth' },
+  { key: 'automation', slug: 'automation-ai', name: 'AI & Automation', tagline: 'AI & workflows', href: '/services/automation-ai', formLabel: 'Marketing automation & AI enablement' },
+  { key: 'b2b', slug: 'b2b-lead-generation', name: 'B2B Lead Generation', tagline: 'Lead generation & outreach', href: '/services/b2b-lead-generation', formLabel: 'B2B lead generation & sales outreach' },
 ];
 
 export const pageBySlug = (slug: string) => SERVICE_PAGES.find((p) => p.slug === slug);
