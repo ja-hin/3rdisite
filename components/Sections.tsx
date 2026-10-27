@@ -288,7 +288,7 @@ export function Enquire({ defaultService }: { defaultService?: string } = {}) {
         </ul>
         <div className="cta-direct">
           <span>Prefer email?</span>
-          <a href="mailto:rupam@3rdivisuals.com">rupam@3rdivisuals.com</a>
+          <a href="mailto:rupam@3rdivisuals.com">hello@3rdivisuals.com</a>
         </div>
       </div>
       <LeadForm defaultService={defaultService} />
