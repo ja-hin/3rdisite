@@ -4,6 +4,7 @@ import '@fontsource/instrument-sans/400.css';
 import '@fontsource/instrument-sans/500.css';
 import '@fontsource/instrument-sans/600.css';
 import './globals.css';
+import './services.css';
 
 export const metadata: Metadata = {
   title: '3rd i Visuals — Growth, marketing and AI',

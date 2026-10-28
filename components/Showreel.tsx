@@ -8,13 +8,14 @@ import { useAtmosphere } from './Atmosphere';
  * Four YouTube showreels for the "Content that works harder" section.
  * Hover (or focus) plays the video muted inside the tile; click opens it in an overlay with sound.
  */
-type Reel = { id: string; t: string; d: string; h: string; vertical?: boolean };
+type Reel = { id: string; t: string; d: string; h: string; vertical?: boolean; img?: string };
 
+// img: a designed 800x1200 card in /public/assets used as the tile thumbnail (falls back to the YouTube still)
 export const reels: Reel[] = [
-  { id: '3kNjdHQZv_A', t: '3D showreel', d: 'Product renders and CGI that show what a camera cannot.', h: 'b' },
-  { id: 'ZuomJDeCeHQ', t: 'Product explainer & UGC', d: 'Short films that make a product easy to understand and want.', h: 'c' },
-  { id: 'o3_zubZ9PZo', t: 'Social content', d: 'Always-on content built for the feed, the reel and the story.', h: 'd', vertical: true },
-  { id: 'VQoc9rvZm2A', t: 'AI video', d: 'Cinematic AI-generated films, ads and characters, directed shot by shot.', h: 'a' },
+  { id: '3kNjdHQZv_A', t: '3D showreel', d: 'Product renders and CGI that show what a camera cannot.', h: 'b', img: '/assets/reel-3d-cgi.jpg' },
+  { id: 'ZuomJDeCeHQ', t: 'Product explainer & UGC', d: 'Short films that make a product easy to understand and want.', h: 'c', img: '/assets/reel-product-films.jpg' },
+  { id: 'o3_zubZ9PZo', t: 'Social content', d: 'Always-on content built for the feed, the reel and the story.', h: 'd', vertical: true, img: '/assets/reel-social-content.jpg' },
+  { id: 'VQoc9rvZm2A', t: 'AI video', d: 'Cinematic AI-generated films, ads and characters, directed shot by shot.', h: 'a', img: '/assets/reel-ai-video.jpg' },
 ];
 
 const EMBED = 'https://www.youtube-nocookie.com/embed/';
@@ -22,23 +23,25 @@ const previewSrc = (id: string) => `${EMBED}${id}?autoplay=1&mute=1&controls=0&l
 const fullSrc = (id: string) => `${EMBED}${id}?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
 
 // hqdefault always exists; maxresdefault is sharper but YouTube answers a 120px grey placeholder when it is missing
-function useThumb(id: string) {
+function useThumb(id: string, skip = false) {
   const [src, setSrc] = useState(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`);
   useEffect(() => {
+    if (skip) return;
     const probe = new Image();
     probe.onload = () => { if (probe.naturalWidth > 120) setSrc(probe.src); };
     probe.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-  }, [id]);
+  }, [id, skip]);
   return src;
 }
 
 function Tile({ r, onOpen }: { r: Reel; onOpen: (r: Reel) => void }) {
   const [hot, setHot] = useState(false);
-  const thumb = useThumb(r.id);
+  const ytThumb = useThumb(r.id, Boolean(r.img));
+  const thumb = r.img ?? ytThumb;
   return (
     <button
       type="button"
-      className={`reel reel-${r.h} ${hot ? 'is-hot' : ''}`}
+      className={`reel reel-${r.h} ${r.img ? 'has-card' : ''} ${hot ? 'is-hot' : ''}`}
       onMouseEnter={() => setHot(true)}
       onMouseLeave={() => setHot(false)}
       onFocus={() => setHot(true)}

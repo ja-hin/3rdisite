@@ -1,9 +1,12 @@
 'use client';
 
-import { useEffect, useRef, type PointerEvent as RPointerEvent } from 'react';
+import { useEffect, useRef, type CSSProperties, type PointerEvent as RPointerEvent } from 'react';
 import { usePathname } from 'next/navigation';
+import { ACCENTS, SERVICE_DATA } from '@/lib/services';
 import { useAtmosphere } from './Atmosphere';
 import { LeadForm } from './Contact';
+import { useReveal, useTick } from './services/effects';
+import { type CaseSection, WorkflowSection } from './services/Workflow';
 import { Showreel } from './Showreel';
 
 /* ---------- E-commerce ---------- */
@@ -39,22 +42,13 @@ export function Commerce() {
         <div className="stack" ref={stage}>
           <div className="plate plate-listing">
             <div className="listing-media">
-              <svg viewBox="0 0 220 120" className="shoe" aria-hidden="true">
-                <defs>
-                  <linearGradient id="sh" x1="0" x2="1">
-                    <stop offset="0" stopColor="#1f7cf5" /><stop offset="1" stopColor="#6b4ef0" />
-                  </linearGradient>
-                </defs>
-                <path d="M14 86c0-14 6-22 18-26 14-4 28-14 38-30 6-8 16-8 22 0l12 14c10 12 34 18 64 22 24 4 38 12 38 26v6H14z" fill="url(#sh)" />
-                <path d="M14 92h192v10c0 4-4 8-8 8H22c-4 0-8-4-8-8z" fill="#0b1735" />
-                <path d="M74 40l14 12M84 32l14 12M94 26l14 12" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
-              </svg>
+              <img className="shoe" src="/assets/nike-shoe.png" alt="" decoding="async" />
             </div>
             <div className="listing-info">
               <span className="tag">Bestseller in running</span>
-              <strong>Aero knit runner</strong>
+              <strong>Structure Running Shoes</strong>
               <span className="stars" aria-label="4.6 out of 5">★★★★★ <em>4.6</em></span>
-              <div className="buy"><b>₹2,499</b><span>Add to cart</span></div>
+              <div className="buy"><b>₹7,732</b><span>Add to cart</span></div>
             </div>
           </div>
           <div className="plate plate-chart">
@@ -169,6 +163,24 @@ export function Products() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ---------- Workflow (the AI & automation page's case study, repeated on the home page) ---------- */
+
+const workflow = SERVICE_DATA.automation.find((s): s is CaseSection => s.type === 'case');
+
+export function Workflow() {
+  const root = useRef<HTMLDivElement>(null);
+  useReveal(root);
+  const tick = useTick(1000);
+  if (!workflow) return null;
+  const a = ACCENTS.automation;
+  const vars = { '--a': a.main, '--a-text': a.text, '--a-rgb': a.rgb } as CSSProperties;
+  return (
+    <div ref={root}>
+      <WorkflowSection s={workflow} tick={tick} className="sp-case--home" style={vars} exploreHref="/services/automation-ai#workflow" />
+    </div>
   );
 }
 
