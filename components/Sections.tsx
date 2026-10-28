@@ -1,17 +1,20 @@
 'use client';
 
-import { useEffect, useRef, type CSSProperties, type PointerEvent as RPointerEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent as RPointerEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { ACCENTS, SERVICE_DATA } from '@/lib/services';
 import { useAtmosphere } from './Atmosphere';
 import { LeadForm } from './Contact';
 import { useReveal, useTick } from './services/effects';
 import { type CaseSection, WorkflowSection } from './services/Workflow';
-import { Showreel } from './Showreel';
+import { Showreel, VideoLightbox } from './Showreel';
 
 /* ---------- E-commerce ---------- */
 
 const path = ['Marketplace listings', 'Amazon PPC', 'D2C websites', 'Meta & Google', 'Content', 'Conversion'];
+
+// the sample video ad on the commerce stage: a YouTube id and the poster shown on the card
+const ad = { id: 'qr6IkQ_XR28', title: 'Nike shoe ad', thumb: '/assets/nike-ad-thumb.jpg' };
 
 export function Commerce() {
   const stage = useRef<HTMLDivElement>(null);
@@ -23,6 +26,8 @@ export function Commerce() {
     stage.current?.style.setProperty('--rx', `${-y * 12}deg`);
   };
   const reset = () => { stage.current?.style.setProperty('--ry', '-10deg'); stage.current?.style.setProperty('--rx', '6deg'); };
+  const [adOpen, setAdOpen] = useState(false);
+  const closeAd = useCallback(() => setAdOpen(false), []);
 
   return (
     <section className="commerce" data-orb="0 0 0 0.25">
@@ -59,8 +64,11 @@ export function Commerce() {
             </svg>
           </div>
           <div className="plate plate-ad">
-            <div className="ad-media"><i className="play" /></div>
-            <span>Video ad, 15s</span>
+            <button type="button" className="ad-media" onClick={() => setAdOpen(true)} aria-label={`Play ${ad.title}`}>
+              <img src={ad.thumb} alt="" decoding="async" />
+              <i className="play" />
+            </button>
+            <span>Video ad, 22s</span>
           </div>
         </div>
         <ul className="metrics">
@@ -69,6 +77,7 @@ export function Commerce() {
           <li style={{ ['--c' as string]: 'var(--bloom)' }}>Increased sales</li>
         </ul>
       </div>
+      {adOpen && <VideoLightbox id={ad.id} title={ad.title} onClose={closeAd} />}
     </section>
   );
 }
@@ -236,9 +245,9 @@ export function Audience() {
 /* ---------- Insights ---------- */
 
 const insights = [
-  { t: 'How Indian brands can grow on Amazon US', k: 'E-commerce', h: 'b' },
-  { t: 'Where AI automation actually saves marketing teams time', k: 'AI & automation', h: 'c' },
-  { t: 'Building a B2B outbound engine using email and LinkedIn', k: 'B2B growth', h: 'd' },
+  { t: 'How Indian brands can grow on Amazon US', k: 'E-commerce', img: '/assets/insight-amazon-us.jpg' },
+  { t: 'Where AI automation actually saves marketing teams time', k: 'AI & automation', img: '/assets/insight-ai-automation.jpg' },
+  { t: 'Building a B2B outbound engine using email and LinkedIn', k: 'B2B growth', img: '/assets/insight-b2b-outbound.jpg' },
 ];
 
 export function Insights() {
@@ -250,8 +259,8 @@ export function Insights() {
       </div>
       <div className="insights-grid">
         {insights.map((p) => (
-          <a href="#insights" key={p.t} className={`post post-${p.h}`}>
-            <div className="post-art"><i /><i /></div>
+          <a href="#insights" key={p.t} className="post">
+            <div className="post-art"><img src={p.img} alt="" loading="lazy" decoding="async" /></div>
             <span className="post-k">{p.k}</span>
             <h3>{p.t}</h3>
           </a>
@@ -277,10 +286,10 @@ export function Cta() {
     return () => io.disconnect();
   }, [fluid]);
   return (
-    <section id="contact" ref={ref} className="cta" data-orb="0 0.27 0.5 0.2" data-orb-m="0 0.24 0.5 0.2" data-orb-rel="">
+    <section ref={ref} className="cta" data-orb="0 0.27 0.5 0.2" data-orb-m="0 0.24 0.5 0.2" data-orb-rel="">
       <h2>What is slowing your growth?</h2>
       <p>Tell us where you&rsquo;re trying to grow, sell or improve. We&rsquo;ll start with the business problem and work backwards to the right solution.</p>
-      <a href="#enquire" className="btn btn-solid btn-lg" onMouseEnter={() => fluid.current?.burst(3)}>Talk to us</a>
+      <a href="#contact" className="btn btn-solid btn-lg" onMouseEnter={() => fluid.current?.burst(3)}>Talk to us</a>
       <span className="cta-note">No predefined package. Start with the problem.</span>
     </section>
   );
@@ -288,7 +297,7 @@ export function Cta() {
 
 export function Enquire({ defaultService }: { defaultService?: string } = {}) {
   return (
-    <section id="enquire" className="enquire" data-orb="0 0 0 0.2">
+    <section id="contact" className="enquire" data-orb="0 0 0 0.2">
       <div className="enquire-copy">
         <p className="kicker">Contact us</p>
         <h2>Start with the problem, not a package.</h2>
@@ -330,7 +339,7 @@ export function Footer() {
         <a href={at('#work')}>Work</a>
         <a href={at('#products')}>AI products</a>
         <a href={at('#insights')}>Insights</a>
-        <a href="#enquire">Contact</a>
+        <a href="#contact">Contact</a>
       </nav>
       <p className="footer-base">© {new Date().getFullYear()} 3rd i Visuals, 3rdivisuals.com</p>
     </footer>

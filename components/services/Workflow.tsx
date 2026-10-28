@@ -77,7 +77,7 @@ export function WorkflowSection({
           <p>{s.card.p}</p>
           <div className="sp-actions">
             <a href={exploreHref} className="btn btn-solid">{s.card.cta1}</a>
-            <a href="#enquire" className="btn btn-glass">{s.card.cta2}</a>
+            <a href="#contact" className="btn btn-glass">{s.card.cta2}</a>
           </div>
         </div>
         <div className="sp-case-quote">

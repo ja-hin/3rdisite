@@ -64,15 +64,11 @@ function Tile({ r, onOpen }: { r: Reel; onOpen: (r: Reel) => void }) {
   );
 }
 
-export function Showreel() {
-  const [active, setActive] = useState<Reel | null>(null);
+/* Full-screen YouTube overlay with sound. Locks the page behind it and closes on Escape, backdrop click or the X. */
+export function VideoLightbox({ id, title, vertical = false, onClose }: { id: string; title: string; vertical?: boolean; onClose: () => void }) {
   const { lenis } = useAtmosphere();
-  const close = useCallback(() => setActive(null), []);
-
-  // lock the page behind the overlay and close on Escape
   useEffect(() => {
-    if (!active) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = 'hidden';
@@ -82,25 +78,31 @@ export function Showreel() {
       document.documentElement.style.overflow = prev;
       lenis.current?.start();
     };
-  }, [active, close, lenis]);
+  }, [onClose, lenis]);
 
+  return createPortal(
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
+      <div className={`lightbox-frame ${vertical ? 'is-vertical' : ''}`} onClick={(e) => e.stopPropagation()}>
+        <iframe src={fullSrc(id)} title={title} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+      </div>
+      <p className="lightbox-title">{title}</p>
+      <button type="button" className="lightbox-close" aria-label="Close video" onClick={onClose}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </div>,
+    document.body,
+  );
+}
+
+export function Showreel() {
+  const [active, setActive] = useState<Reel | null>(null);
+  const close = useCallback(() => setActive(null), []);
   return (
     <>
       <div className="reels">
         {reels.map((r) => <Tile key={r.id} r={r} onOpen={setActive} />)}
       </div>
-      {active && createPortal(
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={active.t} onClick={close}>
-          <div className={`lightbox-frame ${active.vertical ? 'is-vertical' : ''}`} onClick={(e) => e.stopPropagation()}>
-            <iframe src={fullSrc(active.id)} title={active.t} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
-          </div>
-          <p className="lightbox-title">{active.t}</p>
-          <button type="button" className="lightbox-close" aria-label="Close video" onClick={close}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-          </button>
-        </div>,
-        document.body,
-      )}
+      {active && <VideoLightbox id={active.id} title={active.t} vertical={active.vertical} onClose={close} />}
     </>
   );
 }

@@ -93,7 +93,7 @@ export default function ServicesIndex() {
               <p className="sp-para sx-lead" data-reveal={500}>Your content, digital sales, customer acquisition and marketing operations should not work in isolation.</p>
               <p className="sx-lead sx-lead--strong" data-reveal={600}>3rd i Visuals brings strategy, creative, growth marketing, sales outreach and AI-enabled automation together, helping businesses build a more connected path from attention to customer acquisition and growth.</p>
               <div className="sp-actions" data-reveal={700}>
-                <a href="#enquire" className="btn btn-solid">Discuss Your Growth Challenge</a>
+                <a href="#contact" className="btn btn-solid">Discuss Your Growth Challenge</a>
                 <a href="#services" className="btn btn-ghost">Explore Our Services <span>↓</span></a>
               </div>
             </div>
@@ -302,7 +302,7 @@ export default function ServicesIndex() {
           <section className="sp-section sp-three">
             <div className="sp-three-head">
               <h2 data-reveal={0}>Work with us in the way that fits the problem.</h2>
-              <a href="#enquire" className="btn btn-dark" data-reveal={80}>Talk to Us About Your Requirement</a>
+              <a href="#contact" className="btn btn-dark" data-reveal={80}>Talk to Us About Your Requirement</a>
             </div>
             <div className="sp-three-grid">
               {engage.map((e, i) => (
@@ -368,13 +368,13 @@ export default function ServicesIndex() {
           </section>
 
           {/* 10 CTA */}
-          <section id="contact" className="sp-cta sp-bleed">
+          <section className="sp-cta sp-bleed">
             <div className="sp-cta-glow" aria-hidden="true" />
             <div className="sp-in sp-cta-in">
               <h2 className="sx-cta-h2" data-reveal={0}>What is getting in the way of your growth?</h2>
               <p data-reveal={100}>You don&rsquo;t need to decide which 3rd i Visuals service you need.</p>
               <p className="sx-cta-p2" data-reveal={160}>Tell us what you&rsquo;re trying to achieve, where you&rsquo;re getting stuck and what you&rsquo;re already doing. <strong>We&rsquo;ll start with the problem and identify the right way forward.</strong></p>
-              <a href="#enquire" className="btn btn-solid btn-lg" data-reveal={220}>Discuss Your Growth Challenge</a>
+              <a href="#contact" className="btn btn-solid btn-lg" data-reveal={220}>Discuss Your Growth Challenge</a>
               <nav className="sp-cta-others" aria-label="Service pages" data-reveal={280}>
                 <span>Or explore:</span>
                 {SERVICE_PAGES.map((p) => <a key={p.key} href={p.href}>{p.name}</a>)}

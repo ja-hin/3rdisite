@@ -28,7 +28,7 @@ export function SiteNav({ current = '/services' }: { current?: string }) {
           </a>
         ))}
       </nav>
-      <a href="#enquire" className="btn btn-dark nav-cta">Talk to us</a>
+      <a href="#contact" className="btn btn-dark nav-cta">Talk to us</a>
       <button className="nav-toggle" aria-expanded={open} aria-label="Menu" onClick={() => setOpen((o) => !o)}>
         <span /><span />
       </button>

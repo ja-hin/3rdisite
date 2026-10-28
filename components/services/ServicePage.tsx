@@ -60,7 +60,7 @@ function SectionView({ s, ctx }: { s: Section; ctx: Ctx }) {
             <p className="sp-lead" data-reveal={500}>{s.p1}</p>
             <p className="sp-lead sp-lead--strong" data-reveal={600}>{s.p2}</p>
             <div className="sp-actions" data-reveal={700}>
-              <a href="#enquire" className="btn btn-solid">{s.cta1}</a>
+              <a href="#contact" className="btn btn-solid">{s.cta1}</a>
               <a href="#capabilities" className="btn btn-ghost">{s.cta2}</a>
             </div>
           </div>
@@ -294,7 +294,7 @@ function SectionView({ s, ctx }: { s: Section; ctx: Ctx }) {
         <section className="sp-section sp-three" data-orb={`0.86 0.62 0.26 ${hue}`} data-orb-m="0 0 0 0">
           <div className="sp-three-head">
             <Eyebrow reveal={0}>{s.eyebrow}</Eyebrow>
-            {s.engage && <a href="#enquire" className="btn btn-dark" data-reveal={80}>Talk to Us About Your Requirement</a>}
+            {s.engage && <a href="#contact" className="btn btn-dark" data-reveal={80}>Talk to Us About Your Requirement</a>}
           </div>
           <div className="sp-three-grid">
             {s.items.map((it, i) => (
@@ -353,12 +353,12 @@ function SectionView({ s, ctx }: { s: Section; ctx: Ctx }) {
 
     case 'cta':
       return (
-        <section id="contact" className="sp-cta sp-bleed">
+        <section className="sp-cta sp-bleed">
           <div className="sp-cta-glow" aria-hidden="true" />
           <div className="sp-in sp-cta-in">
             <h2 data-reveal={0}>{s.h2}</h2>
             <p data-reveal={100}>{s.p}</p>
-            <a href="#enquire" className="btn btn-solid btn-lg" data-reveal={180}>{s.cta}</a>
+            <a href="#contact" className="btn btn-solid btn-lg" data-reveal={180}>{s.cta}</a>
             <nav className="sp-cta-others" aria-label="Other services" data-reveal={260}>
               <span>Other services:</span>
               {others.map((o) => <a key={o.key} href={o.href}>{o.name}</a>)}
