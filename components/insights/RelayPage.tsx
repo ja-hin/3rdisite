@@ -6,6 +6,7 @@ import { Enquire, Footer } from '@/components/Sections';
 import { Eyebrow } from '@/components/services/Eyebrow';
 import { SiteNav } from '@/components/services/SiteNav';
 import { useReveal, useTick } from '@/components/services/effects';
+import { Count } from '@/components/insights/Count';
 import { AGENTS, DESK, JOBS, LANES, LOOP, STACK, STATS, STEPS } from '@/lib/relay';
 import { ACCENTS } from '@/lib/services';
 
@@ -86,7 +87,7 @@ export default function RelayPage({ brochure }: { brochure: string | null }) {
             {STATS.map((s) => (
               <div key={s.t} className="rl-stat" data-reveal={s.delay} style={{ ['--glow' as string]: s.glow } as CSSProperties}>
                 <i className="rl-glow" aria-hidden="true" />
-                <Count n={s.n} color={s.color} />
+                <Count n={s.n} className="rl-stat-n" style={{ color: s.color }} />
                 <span className="rl-stat-t">{s.t}</span>
                 <p>{s.d}</p>
               </div>
@@ -262,29 +263,6 @@ export default function RelayPage({ brochure }: { brochure: string | null }) {
       </div>
     </Atmosphere>
   );
-}
-
-/* A number that counts up from zero the first time it scrolls into view. */
-function Count({ n, color }: { n: number; color: string }) {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !n || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      io.disconnect();
-      const t0 = performance.now();
-      const frame = (t: number) => {
-        const p = Math.min(1, (t - t0) / 1400);
-        el.textContent = String(Math.round(n * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) requestAnimationFrame(frame);
-      };
-      requestAnimationFrame(frame);
-    }, { threshold: 0.5 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [n]);
-  return <strong ref={ref} className="rl-stat-n" style={{ color }}>{n}</strong>;
 }
 
 /* The dot travels the hero circle once every 12s; the stage it passes and that stage's lane cells light up. */

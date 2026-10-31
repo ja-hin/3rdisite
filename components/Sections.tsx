@@ -246,8 +246,8 @@ export function Audience() {
 
 const insights = [
   { t: 'How Indian brands can grow on Amazon US', k: 'E-commerce', img: '/assets/insight-amazon-us.jpg', href: '#insights' },
-  { t: 'RELAY: agentic outreach that turns a reply into a sample deck in 40 minutes', k: 'Agentic AI · case study', img: '/assets/insight-ai-automation.jpg', href: '/insights/agentic-ai-relay' },
-  { t: 'Building a B2B outbound engine using email and LinkedIn', k: 'B2B growth', img: '/assets/insight-b2b-outbound.jpg', href: '#insights' },
+  { t: 'Cold email to sending samples in 10 minutes, with one human click', k: 'AI automation · B2B outreach', img: '/assets/insight-relay-cold-email.jpg', href: '/insights/agentic-ai-relay' },
+  { t: 'OneStory: one brief in, every channel live, without adding headcount', k: 'Human + Agentic AI · Social content', img: '/assets/insight-onestory.jpg', href: '/insights/onestory' },
 ];
 
 export function Insights() {
