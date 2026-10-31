@@ -48,16 +48,20 @@ Copy `.env.example` to `.env.local` and set where leads should go:
 
 | Variable | What it does |
 | --- | --- |
-| `LEAD_WEBHOOK_URL` | Every lead is POSTed as JSON here (Zapier, Make, n8n, Google Sheets, your CRM). |
-| `RESEND_API_KEY` + `LEAD_TO_EMAIL` | Emails each lead through [Resend](https://resend.com). `LEAD_FROM_EMAIL` must be a verified sender. |
+| `LEAD_TO_EMAIL` | Inbox(es) that receive each lead, comma separated. Defaults to `rupam@3rdivisuals.com`. |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Emails each lead from an existing mailbox. For Gmail / Google Workspace use `smtp.gmail.com`, port `587`, your address and an [App Password](https://myaccount.google.com/apppasswords). No DNS changes needed. |
+| `RESEND_API_KEY` | Emails each lead through [Resend](https://resend.com) instead. `LEAD_FROM_EMAIL` must be on a domain verified there. |
+| `LEAD_WEBHOOK_URL` | Also POSTs every lead as JSON here (Zapier, Make, n8n, Google Sheets, your CRM). |
 | `NEXT_PUBLIC_LEAD_ENDPOINT` | Static export only. The form posts straight to this URL (Formspree, Web3Forms, …) because there is no API route. |
+
+The email carries the lead's details and message, and its Reply-To is the lead's own address, so replying from the inbox answers them directly.
 
 Leads are addressed to `rupam@3rdivisuals.com` by default. With no key set, the lead is printed to the server console and the visitor's browser opens a pre-filled mail draft to that inbox, so nothing is lost. The route rejects
 submissions with a filled honeypot field and allows six per IP every ten minutes.
 
 ## Before launch
 
-- Paste a Resend API key into `.env.local` so leads are emailed automatically. Change the inbox with `LEAD_TO_EMAIL` and in the "Prefer email?" link in `components/Sections.tsx`.
+- Fill in the SMTP settings (or a Resend key) in `.env.local`, and the same variables on the hosting platform, so leads are emailed automatically. Change the inbox with `LEAD_TO_EMAIL` and in the "Prefer email?" link in `components/Sections.tsx`.
 - Point the remaining `#` links (case studies, insights) at real routes when those pages exist. Service pages live under `/services`.
 - Swap the CSS-drawn placeholders on the home page (content reels, studio shots, insight art) for your own video stills or renders. The services pages already use the photos in `public/assets`; the work cards there still show sample images until real case studies exist.
 # 3rdisite

@@ -245,9 +245,9 @@ export function Audience() {
 /* ---------- Insights ---------- */
 
 const insights = [
-  { t: 'How Indian brands can grow on Amazon US', k: 'E-commerce', img: '/assets/insight-amazon-us.jpg' },
-  { t: 'Where AI automation actually saves marketing teams time', k: 'AI & automation', img: '/assets/insight-ai-automation.jpg' },
-  { t: 'Building a B2B outbound engine using email and LinkedIn', k: 'B2B growth', img: '/assets/insight-b2b-outbound.jpg' },
+  { t: 'How Indian brands can grow on Amazon US', k: 'E-commerce', img: '/assets/insight-amazon-us.jpg', href: '#insights' },
+  { t: 'RELAY: agentic outreach that turns a reply into a sample deck in 40 minutes', k: 'Agentic AI · case study', img: '/assets/insight-ai-automation.jpg', href: '/insights/agentic-ai-relay' },
+  { t: 'Building a B2B outbound engine using email and LinkedIn', k: 'B2B growth', img: '/assets/insight-b2b-outbound.jpg', href: '#insights' },
 ];
 
 export function Insights() {
@@ -259,7 +259,7 @@ export function Insights() {
       </div>
       <div className="insights-grid">
         {insights.map((p) => (
-          <a href="#insights" key={p.t} className="post">
+          <a href={p.href} key={p.t} className="post">
             <div className="post-art"><img src={p.img} alt="" loading="lazy" decoding="async" /></div>
             <span className="post-k">{p.k}</span>
             <h3>{p.t}</h3>
